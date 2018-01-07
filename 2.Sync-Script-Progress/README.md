@@ -1,4 +1,4 @@
-# Task 1 - Sync-Script
+# Task 2 - Sync-Script Show Progress
 
 **Description**
 Using the same script as in question 1, modify it to show a count of the files to be synced into the console, and a progress indicator of the files as they are being copied.
