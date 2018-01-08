@@ -1,0 +1,13 @@
+image: python:3.5.1
+
+pipelines:
+  branches:
+    master:
+      - step:
+          name: 'Deploy Code'
+          script:
+            - ssh ${INSTANCE_USER}@${INSTANCE_IP} 'cd /var/www/prod/current/ && bash Deploy.sh'
+      - step:
+          name: 'Testing New Code'
+          script:
+            - ssh ${INSTANCE_USER}@${INSTANCE_IP} 'cd /var/www/prod/current/ && bash Testing.sh'

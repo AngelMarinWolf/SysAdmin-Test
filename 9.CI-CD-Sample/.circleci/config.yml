@@ -1,0 +1,32 @@
+version: 2
+jobs:
+  deploy:
+    working_directory: ~/deploy
+    docker:
+      - image: python:3.5
+    steps:
+      - checkout
+      - deploy:
+          name: 'Deploying Using Bash Script'
+          command: ssh ${INSTANCE_USER}@${INSTANCE_IP} 'cd /var/www/prod/current/ && bash Deploy.sh'
+  testing:
+    working_directory: ~/deploy
+    docker:
+      - image: python:3.5
+    steps:
+      - checkout
+      - deploy:
+          name: 'Testing Using Bash Script '
+          command: ssh ${INSTANCE_USER}@${INSTANCE_IP} 'cd /var/www/prod/current/ && bash Testing.sh'
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only: master
+      - testing:
+          require:
+            - deploy
